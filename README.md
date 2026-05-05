@@ -28,7 +28,7 @@ your face, rendered in `░▒▓█` — real-time, zero dependencies beyond Py
 
 ## guitar edition
 
-专为吉他录音优化，支持音频响应、主题色彩、边框装饰。
+Optimized for guitar recording, supports audio response, theme colors, and border decorations.
 
 ### audio-reactive features
 
