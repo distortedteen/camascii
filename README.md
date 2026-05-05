@@ -2,6 +2,8 @@
 
 > live webcam → ASCII art in your terminal
 
+Licensed under [MIT](LICENSE) — free for personal and commercial use.
+
 your face, rendered in `░▒▓█` — real-time, zero dependencies beyond Python and OpenCV.
 
 ```
@@ -51,10 +53,18 @@ Optimized for guitar recording, supports audio response, theme colors, and borde
 ## install
 
 ```bash
-git clone https://github.com/yourname/camascii
+git clone https://github.com/distortedteen/camascii
 cd camascii
 pip install -r requirements.txt
 ```
+
+### requirements
+
+- **Python** 3.10+
+- **opencv-python** >=4.8.0
+- **numpy** >=1.24.0
+- **sounddevice** >=0.4.6 (for audio mode)
+- **scipy** >=1.11.0
 
 > on Fedora/CachyOS you may need `--break-system-packages` if outside a venv
 
@@ -66,11 +76,27 @@ python camascii.py
 
 make your terminal fullscreen first — more pixels = more detail.
 
+## quick start (basic mode)
+
+```bash
+# 1. make terminal fullscreen
+# 2. run the default basic mode
+python camascii.py
+# 3. press q to quit
+```
+
 ## run with overlays
 
 ```bash
 python camascii.py --title "raag bhairavi" --subtitle "live session"
 ```
+
+## CLI arguments
+
+| argument | description | default |
+|----------|-------------|---------|
+| `--title` | Title text for overlay | (none) |
+| `--subtitle` | Subtitle text for overlay | (none) |
 
 ## controls
 
@@ -119,6 +145,39 @@ sync_to_monitor  yes
 
 smaller font = more ASCII pixels. 7pt in fullscreen ≈ 300×100 chars.
 
+## troubleshooting
+
+### webcam not detected
+
+- Check that `/dev/video0` exists: `ls /dev/video*`
+- Try a different device index: modify line 190 in `camascii.py` (`VideoCapture(0)` → `VideoCapture(1)`)
+- On Wayland, ensure webcam access is granted in settings
+
+### colors look wrong or monochrome
+
+- Ensure your terminal sets `TERM=xterm-256color`
+- Check: `echo $TERM`
+- If wrong, add to your shell config: `export TERM=xterm-256color`
+- Or press `c` to toggle 256-color mode
+
+### performance is slow / choppy
+
+- Reduce terminal window size (fewer pixels to render)
+- Press `h` to hide HUD overlay
+- Disable color mode (press `c` to toggle off)
+- Close other applications using the webcam
+
+### audio mode not working
+
+- Install PortAudio: `sudo dnf install portaudio-devel` (Fedora) / `sudo apt install libportaudio2` (Debian)
+- Check microphone permissions in system settings
+- Verify with: `python -c "import sounddevice as sd; print(sd.query_devices())"`
+
+### saved .txt files look malformed
+
+- Use a monospace font to view (JetBrains Mono, Fira Code, etc.)
+- Ensure no line wrapping in your editor
+
 ## tips
 
 - **blocks + color** = the neo-tokyo aesthetic
@@ -152,6 +211,39 @@ camascii/
 ├── requirements.txt
 └── README.md
 ```
+
+## contributing
+
+Contributions welcome. Please follow these guidelines:
+
+1. **Fork** the repository
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Test your changes locally
+4. Commit with clear messages: `git commit -m "add: feature description"`
+5. Push to your fork and open a pull request
+
+### code style
+
+- Use **Python 3.10+** syntax
+- Follow [PEP 8](https://peps.python.org/pep-0008/) formatting
+- Use `curses` for terminal rendering (no external TUI libraries)
+
+### changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a full version history.
+
+### development setup
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+## contact
+
+- **Issues**: https://github.com/distortedteen/camascii/issues
+- **Repo**: https://github.com/distortedteen/camascii
 
 ---
 
