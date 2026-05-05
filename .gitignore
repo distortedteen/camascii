@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+*.pyo
+camascii_*.txt
+.venv/
+venv/
